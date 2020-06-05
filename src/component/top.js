@@ -1,5 +1,5 @@
-import React from "react";
-import "./App.css";
+import React, {useState} from "react";
+import "../App.css";
 import {
   Box,
   Card,
@@ -9,16 +9,28 @@ import {
   CardActions,
   Button,
 } from "@material-ui/core";
+import {PATHS} from '../route';
+import {push} from "connected-react-router";
+import {connect} from 'react-redux';
 
-function Top() {
+const {mail, setMail} = useState('');
+const {password, setPassword} = useState('');
+
+const mapDispatchToProps = dispatch => ({
+  push(path) {
+    dispatch(push(path));
+  }
+});
+
+function Top(props) {
   return (
     <div className="App">
-      <Box style={{ backgroundColor: "#D7CCC8", width: 600, height: 800 }}>
+      <Box style={{ backgroundColor: "#D7CCC8", width: "100%", height: 800 }}>
         <br /> <br /> <br />
         <Card
           style={{
             margin: "auto",
-            width: "50%",
+            width: "50%"
           }}
         >
           <CardContent>
@@ -27,9 +39,11 @@ function Top() {
               <br /> <br /> <br />
               <TextField
                 id="outlined"
-                label="UserName"
-                defaultValue="test"
+                label="MailAddress"
+                placeholder="test"
                 variant="outlined"
+                value={mail}
+                onChange={setMail}
               />
               <br /> <br /> <br />
               <TextField
@@ -37,8 +51,10 @@ function Top() {
                 label="Password"
                 type="password"
                 autoComplete="password"
-                defaultValue="*******"
+                placeholder="*******"
                 variant="outlined"
+                value={password}
+                onChange={setPassword}
               />
             </Typography>
           </CardContent>
@@ -50,6 +66,7 @@ function Top() {
                 border: "solid 1px #000",
                 margin: "auto",
               }}
+              onClick={() => props.push(PATHS.rssFeed)}
             >
               login
             </Button>
@@ -75,6 +92,7 @@ function Top() {
                 border: "solid 1px #000",
                 margin: "auto",
               }}
+              onClick={() => props.push(PATHS.signUp)}
             >
               SignUp
             </Button>
@@ -85,4 +103,4 @@ function Top() {
   );
 }
 
-export default Top;
+export default connect(null, mapDispatchToProps)(Top);

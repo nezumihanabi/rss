@@ -1,25 +1,23 @@
 import React from "react";
-import { Router, Route, Switch } from "react-router";
-import { createBrowserHistory } from "history";
-import SignUp from "./signUp"
-import RssFeed from "./register"
-import Top from "./top"
+import {Route, Switch} from "react-router";
+import SignUp from "./component/signUp"
+import RssFeed from "./component/register"
+import Top from "./component/top"
+import {PATHS} from './route';
 
 const App = () => {
   return (
-    <Router history={createBrowserHistory()}>
-      <Switch>
-        <Route exact path="/">
-          <Top />
-        </Route>
-        <Route path="/rss">
-          <RssFeed />
-        </Route>
-        <Route path="/new">
-          <SignUp />
-        </Route>
-      </Switch>
-    </Router>
+    <Switch>
+      <Route exact path={PATHS.login}>
+        <Top/>
+      </Route>
+      <Route path={PATHS.rssFeed}>
+        <RssFeed/>
+      </Route>
+      <Route path={PATHS.signUp}>
+        <SignUp/>
+      </Route>
+    </Switch>
   );
 };
 export default App;
