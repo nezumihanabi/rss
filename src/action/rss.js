@@ -3,6 +3,7 @@ import {findIndex, propEq, update} from 'ramda';
 export const RSS_CREATE = 'RSS_CREATE';
 export const RSS_UPDATE = 'RSS_UPDATE';
 export const RSS_GET = 'RSS_GET';
+export const RSS_LIST_SET = 'RSS_LIST_SET';
 
 export function rssCreateAction(rss) {
   return {
@@ -18,10 +19,16 @@ export function rssUpdateAction(rss) {
   }
 }
 
-export function rssGetAction(rss) {
+export function rssGetAction() {
   return {
     type: RSS_GET,
-    rss: rss,
+  }
+}
+
+export function rssListSetAction(rssList) {
+  return {
+    type: RSS_LIST_SET,
+    rssList: rssList,
   }
 }
 
@@ -34,8 +41,8 @@ export default function userReducer(state = [], action) {
       const index = findIndex(propEq('id', action.rss.id))(state);
       return update(index, action.rss, state)
     }
-    case RSS_GET: {
-      return action.rss
+    case RSS_LIST_SET: {
+      return action.rssList
     }
     default: {
       return state

@@ -1,12 +1,13 @@
 import {call, put, take, takeLatest} from 'redux-saga/effects';
 import {accountDB} from '../api/user';
-import {USER_CREATE, USER_GET, userCreateAction, userUpdateAction} from '../action/user';
+import {USER_CREATE, USER_GET, USER_AUTH, userUpdateAction, userVerifyAction} from '../action/user';
 
 export function* createUser() {
   while (true) {
     const {user} = yield take(USER_CREATE);
-    const account = yield call(accountDB.create(), user);
-    yield put(userCreateAction(account));
+    const account = yield call(accountDB.create, user);
+    user.id = account.uid;
+    yield put(userUpdateAction(user));
   }
 }
 
@@ -18,7 +19,16 @@ export function* getUser() {
   }
 }
 
+export function* authUser() {
+  while (true) {
+    const {user} = yield take(USER_AUTH);
+    const result = yield call(accountDB.auth, user);
+    yield put(userVerifyAction(result));
+  }
+}
+
 export const userSaga = [
   takeLatest(USER_CREATE, createUser),
-  takeLatest(USER_GET, getUser)
+  takeLatest(USER_GET, getUser),
+  takeLatest(USER_AUTH, authUser),
 ];

@@ -11,7 +11,18 @@ export const accountDB = {
       result.user.updateProfile({
         displayName:user.name
       })
+    }).catch((e)=>{
+      console.log(e);
     });
     return firebase.auth().currentUser;
+  },
+  auth: (user) => {
+    console.log(user);
+    firebase.auth().signInWithEmailAndPassword(user.email, user.password).catch((e)=>{
+      console.log(e);
+      return false;
+    });
+    console.log(true);
+    return true;
   }
 };

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "../App.css";
 import {
   Box,
@@ -12,17 +12,25 @@ import {
 import {PATHS} from '../route';
 import {push} from "connected-react-router";
 import {connect} from 'react-redux';
+import {userAuthAction} from '../action/user';
 
-const {mail, setMail} = useState('');
-const {password, setPassword} = useState('');
+const mapStateToProps = state => ({
+  verified: state.verified
+});
 
 const mapDispatchToProps = dispatch => ({
   push(path) {
     dispatch(push(path));
+  },
+  authUser(mail, password) {
+    dispatch(userAuthAction({email: mail, password: password}));
   }
 });
 
 function Top(props) {
+  const [mail, setMail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <div className="App">
       <Box style={{ backgroundColor: "#D7CCC8", width: "100%", height: 800 }}>
@@ -34,39 +42,38 @@ function Top(props) {
           }}
         >
           <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography>
               ユーザ認証
-              <br /> <br /> <br />
-              <TextField
-                id="outlined"
-                label="MailAddress"
-                placeholder="test"
-                variant="outlined"
-                value={mail}
-                onChange={setMail}
-              />
-              <br /> <br /> <br />
-              <TextField
-                id="outlined-password-input"
-                label="Password"
-                type="password"
-                autoComplete="password"
-                placeholder="*******"
-                variant="outlined"
-                value={password}
-                onChange={setPassword}
-              />
             </Typography>
+            <br /> <br /> <br />
+            <TextField
+              id="outlined"
+              label="MailAddress"
+              placeholder="test"
+              variant="outlined"
+              value={mail}
+              onChange={(e) => setMail(e.target.value)}
+            />
+            <br /> <br /> <br />
+            <TextField
+              id="outlined-password-input"
+              label="Password"
+              type="password"
+              autoComplete="password"
+              placeholder="*******"
+              variant="outlined"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </CardContent>
           <CardActions disableSpacing style={{ textAlien: "center" }}>
             <Button
               aria-label="add to favorites"
-              color="textSecondary"
               style={{
                 border: "solid 1px #000",
                 margin: "auto",
               }}
-              onClick={() => props.push(PATHS.rssFeed)}
+              onClick={() => {props.authUser(mail, password);  props.push(PATHS.rssFeed);}}
             >
               login
             </Button>
@@ -80,14 +87,13 @@ function Top(props) {
           }}
         >
           <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography>
               新規登録
             </Typography>
           </CardContent>
           <CardActions disableSpacing style={{ textAlien: "center" }}>
             <Button
               aria-label="add to favorites"
-              color="textSecondary"
               style={{
                 border: "solid 1px #000",
                 margin: "auto",
@@ -103,4 +109,4 @@ function Top(props) {
   );
 }
 
-export default connect(null, mapDispatchToProps)(Top);
+export default connect(mapStateToProps, mapDispatchToProps)(Top);
