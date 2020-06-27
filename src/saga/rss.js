@@ -1,6 +1,7 @@
 import {call, put, take, takeLatest} from 'redux-saga/effects';
 import {rssDB} from '../api/rss';
 import {RSS_CREATE, RSS_GET, rssCreateAction, rssListSetAction} from '../action/rss';
+import {fork} from '@redux-saga/core/effects';
 
 export function* createRss() {
   while (true) {
@@ -12,12 +13,13 @@ export function* createRss() {
 
 export function* getRss() {
   while (true) {
+    yield take(RSS_GET);
     const tmpRss = yield call(rssDB.get);
     yield put(rssListSetAction(tmpRss));
   }
 }
 
 export const rssSaga = [
-  takeLatest(RSS_CREATE, createRss),
-  takeLatest(RSS_GET, getRss)
+  fork(createRss),
+  fork(getRss)
 ];

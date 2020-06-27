@@ -32,7 +32,7 @@ export function rssListSetAction(rssList) {
   }
 }
 
-export default function userReducer(state = [], action) {
+export default function rssReducer(state = [], action) {
   switch (action.type) {
     case RSS_CREATE: {
       return state.concat(action.rss)
@@ -42,7 +42,7 @@ export default function userReducer(state = [], action) {
       return update(index, action.rss, state)
     }
     case RSS_LIST_SET: {
-      return action.rssList
+      return {...state, rssList: action.rssList}
     }
     default: {
       return state

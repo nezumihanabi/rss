@@ -1,6 +1,7 @@
 import {call, put, take, takeLatest} from 'redux-saga/effects';
 import {accountDB} from '../api/user';
 import {USER_CREATE, USER_GET, USER_AUTH, userUpdateAction, userVerifyAction} from '../action/user';
+import {fork} from '@redux-saga/core/effects';
 
 export function* createUser() {
   while (true) {
@@ -28,7 +29,7 @@ export function* authUser() {
 }
 
 export const userSaga = [
-  takeLatest(USER_CREATE, createUser),
-  takeLatest(USER_GET, getUser),
-  takeLatest(USER_AUTH, authUser),
+  fork(createUser),
+  fork(getUser),
+  fork(authUser),
 ];

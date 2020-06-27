@@ -17,6 +17,9 @@ const App = () => {
       <Route path={PATHS.signUp}>
         <SignUp/>
       </Route>
+      <Route path={PATHS.rssFeedList}>
+        <SignUp/>
+      </Route>
     </Switch>
   );
 };
