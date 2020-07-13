@@ -8,14 +8,21 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "connected-react-router": "^6.8.0",
     "firebase": "^7.14.3",
+    "history": "latest",
     "material-icons": "^0.3.1",
+    "ramda": "^0.27.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "react-router": "latest",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
-    "react-router": "latest",
-    "history": "latest"
+    "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^1.1.3",
+    "sequelize-cli": "^5.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
